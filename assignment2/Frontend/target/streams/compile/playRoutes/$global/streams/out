@@ -1,0 +1,2 @@
+[error] (compile:playRoutes) @7enfppkla: Compilation error[string matching regex `\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*' expected but `
+[error] ' found] in D:\programs\cmu\Lab-4-Ebean\Lab-4-Ebean\Frontend\conf\routes:14

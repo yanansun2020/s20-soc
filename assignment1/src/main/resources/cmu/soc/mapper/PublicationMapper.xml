@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cmu.soc.dao.PublicationMapper" >
+    <resultMap id="publicationMap" type="cmu.soc.dao.entity.Publication" >
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="author" column="author"/>
+        <result property="pages" column="pages"/>
+        <result property="year" column="year"/>
+        <result property="crossref" column="cross_ref"/>
+        <result property="url" column="url"/>
+        <result property="booktitle" column="book_title"/>
+        <result property="isbn" column="isbn"/>
+        <result property="publisher" column="publisher"/>
+        <result property="editor" column="editor"/>
+        <result property="volume" column="volume"/>
+        <result property="number" column="number"/>
+        <result property="journal" column="journal"/>
+        <result property="series" column="series"/>
+        <result property="paperDtdAttribute.key" column="key"/>
+        <result property="paperDtdAttribute.mdate" column="mdate"/>
+        <result property="paperDtdAttribute.paperType" column="channel"/>
+    </resultMap>
+
+    <resultMap id="authorMap" type="cmu.soc.dao.entity.Author" >
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+  <insert id="addPublication" parameterType="cmu.soc.parser.PaperDtd" useGeneratedKeys="true" keyProperty="paperDtd.id" keyColumn="id">
+      INSERT INTO publication (title, channel, `year`, pages, cross_ref, ee, url, book_title, isbn, publisher, editor, volume, `number`, journal, series, `key`, mdate) VALUES
+      (#{paperDtd.title}, #{paperDtd.paperDtdAttribute.paperType}, #{paperDtd.year}, #{paperDtd.pages}, #{paperDtd.crossref}, #{paperDtd.ee}, #{paperDtd.url}, #{paperDtd.booktitle}, #{paperDtd.isbn},
+      #{paperDtd.publisher}, #{paperDtd.editor}, #{paperDtd.volume}, #{paperDtd.number},#{paperDtd.journal}, #{paperDtd.series}, #{paperDtd.paperDtdAttribute.key}, #{paperDtd.paperDtdAttribute.mdate})
+  </insert>
+
+  <insert id="addAuthor" parameterType="cmu.soc.dao.entity.Author" useGeneratedKeys="true" keyProperty="author.id" keyColumn="id">
+      replace into author(name) values (#{author.name})
+  </insert>
+  <insert id="addPubAuthor" parameterType="cmu.soc.dao.entity.PubAuthor" useGeneratedKeys="true" keyProperty="pubAuthor.id" keyColumn="id">
+      insert into pub_author(pub_id, author_id) values(#{pubAuthor.pubId}, #{pubAuthor.authorId})
+  </insert>
+
+    <select id="getOneById" resultType="cmu.soc.parser.PaperDtd">
+        select * from publication where 1=1 and id=#{id};
+    </select>
+
+    <select id="getOneAuthorByName" resultMap="authorMap" resultType="cmu.soc.dao.entity.Author">
+        select * from author where 1=1 and `name`=#{name};
+    </select>
+
+    <select id="getCoAuthors" resultMap="authorMap" resultType="cmu.soc.dao.entity.Author">
+        SELECT author.id as id, author.name as name FROM (
+        SELECT DISTINCT(b.author_id) FROM (
+        SELECT pub_id  FROM pub_author WHERE author_id IN (
+        SELECT author_id FROM pub_author AS pa JOIN author AS a ON pa.author_id=a.id WHERE a.name=#{name}))
+        AS a JOIN pub_author AS b ON a.pub_id = b.pub_id) AS c JOIN author ON c.author_id = author.id;
+    </select>
+
+    <select id="getPubsByTitle" resultMap="publicationMap" resultType="cmu.soc.dao.entity.Publication" parameterType="cmu.soc.dao.entity.Publication">
+        SELECT p.* FROM publication as p WHERE 1=1
+        <if test="pub.title != null and pub.title != ''">
+            and p.title like CONCAT('%',#{pub.title}, '%')
+        </if>
+        <if test="pub.year != null and pub.year != ''">
+            and p.year = #{pub.year}
+        </if>
+        <if test="pub.volume != null and pub.volume != ''">
+            and p.volume = #{pub.volume}
+        </if>
+        <if test="pub.journal != null and pub.journal != ''">
+            and p.journal = #{pub.journal}
+        </if>
+        <if test="pub.number != null and pub.number != ''">
+            and p.number = #{pub.number}
+        </if>
+        <if test="pub.paperDtdAttribute != null and pub.paperDtdAttribute.paperType != null and pub.paperDtdAttribute.paperType != ''">
+            and p.channel = #{pub.paperDtdAttribute.paperType}
+        </if>
+    </select>
+    
+    <select id="getAuthorsByPbIds" resultType="cmu.soc.dao.entity.Publication" resultMap="publicationMap">
+        select a.pub_id as id, b.name as author from pub_author as a join author as b on a.author_id = b.id where a.pub_id in
+        <foreach collection="paperIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

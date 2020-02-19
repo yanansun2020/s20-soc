@@ -1,0 +1,4 @@
+[error] D:\programs\cmu\Lab-4-Ebean\Lab-4-Ebean\Frontend\app\views\map.scala.html:7: Invalid '@' symbol
+[error]         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+[error]                                                               ^
+[error] (compile:twirlCompileTemplates) Twirl compilation failed

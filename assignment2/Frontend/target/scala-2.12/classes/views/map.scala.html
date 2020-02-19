@@ -1,0 +1,54 @@
+@import com.fasterxml.jackson.databind.JsonNode
+@(message: List[JsonNode])
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Map</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@@1.6.0/dist/leaflet.js"
+            integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+            crossorigin=""></script>
+        <meta charset="UTF-8">
+        <style type="text/css">
+                #mapid { height: 300px; width: 100% }
+        </style>
+    </head>
+    <body>
+        <div id="mapid"></div>
+        <script>
+                var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    id: 'mapbox/streets-v11',
+                    accessToken: 'pk.eyJ1IjoiaGl0eWFuYW4iLCJhIjoiY2s2Y205NXJ3MWRyYzNrb2I5cnJnYmZjaCJ9.GCFhUqquhJXTdtSvqAjG8g'
+                }).addTo(mymap);
+
+                //var marker = L.marker([51.5, -0.09]).addTo(mymap);
+
+                @for(p <- message) {
+                    L.circle(@p, {
+                        color: 'red',
+                        fillColor: '#f03',
+                        fillOpacity: 0.5,
+                        radius: 500
+                    }).addTo(mymap);
+                }
+               /* var circle = L.circle(, {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 500
+                }).addTo(mymap);*/
+
+               /* var polygon = L.polygon([
+                    [51.509, -0.08],
+                    [51.503, -0.06],
+                    [51.51, -0.047]
+                ]).addTo(mymap);*/
+        </script>
+        @message
+    </body>
+</html>
