@@ -44,4 +44,7 @@ public interface PublicationService {
     List<Publication> getPublications(String conferenceName, String year);
 
 
+    List<Publication> getAllPublications();
+
+    List<Publication> getByYearAndTitle(String yearFrom, String yearTo, String title);
 }

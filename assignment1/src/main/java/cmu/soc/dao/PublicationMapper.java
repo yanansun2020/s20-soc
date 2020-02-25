@@ -3,6 +3,7 @@ package cmu.soc.dao;
 import cmu.soc.dao.entity.Author;
 import cmu.soc.dao.entity.PubAuthor;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.model.SearchPublicationYear;
 import cmu.soc.parser.PaperDtd;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +28,11 @@ public interface PublicationMapper {
     List<Author> getCoAuthors(@Param("name")String name);
 
     List<Publication> getAuthorsByPbIds(@Param("paperIds")List<Long> paperIds);
+
+    List<Publication> getAll();
+    List<Publication> getByTitleAndYearPolygon(@Param("from")SearchPublicationYear from,
+                                               @Param("to") SearchPublicationYear to,
+                                               @Param("title") String title,
+                                               @Param("polygon") String polygon);
+
 }

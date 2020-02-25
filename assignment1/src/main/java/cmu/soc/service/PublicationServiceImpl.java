@@ -4,6 +4,7 @@ import cmu.soc.dao.PublicationMapper;
 import cmu.soc.dao.entity.Author;
 import cmu.soc.dao.entity.PubAuthor;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.model.SearchPublicationYear;
 import cmu.soc.parser.PaperDtd;
 import cmu.soc.parser.PaperDtdAttribute;
 import cmu.soc.parser.PaperType;
@@ -169,5 +170,22 @@ public class PublicationServiceImpl implements PublicationService{
             PubAuthor pubAuthor = new PubAuthor(pubId, authorId);
             publicationMapper.addPubAuthor(pubAuthor);
         }
+    }
+
+    public List<Publication> getAllPublications(){
+        return publicationMapper.getAll();
+    }
+
+    @Override
+    public List<Publication> getByYearAndTitle(String yearFrom, String yearTo, String title) {
+        //get polygon
+        SearchPublicationYear from = new SearchPublicationYear(Integer.parseInt(yearFrom), 6);
+        SearchPublicationYear to = new SearchPublicationYear(Integer.parseInt(yearTo), 6);
+        StringBuilder sb = new StringBuilder();
+        sb.append(from.getYear()).append(" ").append("0").append(",");
+        sb.append(from.getYear()).append(" ").append(from.getMonth()).append(",");
+        sb.append(to.getYear()).append(" ").append(to.getMonth()).append(",");
+        sb.append(to.getYear()).append(" ").append(0);
+        return publicationMapper.getByTitleAndYearPolygon(from, to, title, sb.toString());
     }
 }

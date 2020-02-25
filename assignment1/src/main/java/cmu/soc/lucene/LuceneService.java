@@ -20,7 +20,7 @@ import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
 
-public class HelloLucene {
+public class LuceneService {
     public static void main(String[] args) throws IOException, ParseException {
         // 0. Specify the analyzer for tokenizing text.
         // The same analyzer should be used for indexing and searching
@@ -38,10 +38,11 @@ public class HelloLucene {
         w.close();
 
         // 2. query
-        String querystr = args.length > 0 ? args[0] : "lucene Yanan";
+        String querystr = args.length > 0 ? args[0] : "lucene Yu";
         // the "title" arg specifies the default field to use
         // when no field is explicitly specified in the query.
         Query q = new QueryParser("title", analyzer).parse(querystr);
+        Query q2 = new QueryParser("author", analyzer).parse(querystr);
 
         // 3. search
         int hitsPerPage = 10;
@@ -50,12 +51,21 @@ public class HelloLucene {
         IndexSearcher searcher = new IndexSearcher(reader);
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
         searcher.search(q, collector);
+        TopScoreDocCollector collector2 = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
+        searcher.search(q2, collector2);
         ScoreDoc[] hits = collector.topDocs(0).scoreDocs;
-
+        ScoreDoc[] hits2 = collector2.topDocs(0).scoreDocs;
         // 4. display results
-        System.out.println("Found " + hits.length + " hits.");
+        System.out.println("Found " + hits.length + " hits. in q1 for title");
         for(int i=0;i<hits.length;++i) {
             int docId = hits[i].doc;
+            Document d = searcher.doc(docId);
+            System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
+        }
+
+        System.out.println("Found " + hits.length + " hits. inq2 for author");
+        for(int i=0;i<hits2.length;++i) {
+            int docId = hits2[i].doc;
             Document d = searcher.doc(docId);
             System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
         }
