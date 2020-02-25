@@ -100,4 +100,15 @@ public class PublicationServiceImplTest {
         String  file= "q4.xqy";
         //System.out.println(XQuery.getByString("Performance Impact of Web Service Migration in Embedded Environments."));
     }
+
+
+    /**
+     * 2.4 Given a paper name, list its publication metadata,
+     * including paper title, all co-authors, publication channel (e.g., conference, journal, etc), time, page etc.
+     */
+    @Test
+    public void testCoordinate(){
+        //System.out.println(XQuery.getByString("Performance Impact of Web Service Migration in Embedded Environments."));
+        publicationService.getByYearAndTitle("2005", "2006", "Performance Impact of Web Service Migration in Embedded Environments");
+    }
 }

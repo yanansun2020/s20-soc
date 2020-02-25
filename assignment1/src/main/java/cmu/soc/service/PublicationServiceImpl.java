@@ -185,7 +185,9 @@ public class PublicationServiceImpl implements PublicationService{
         sb.append(from.getYear()).append(" ").append("0").append(",");
         sb.append(from.getYear()).append(" ").append(from.getMonth()).append(",");
         sb.append(to.getYear()).append(" ").append(to.getMonth()).append(",");
-        sb.append(to.getYear()).append(" ").append(0);
-        return publicationMapper.getByTitleAndYearPolygon(from, to, title, sb.toString());
+        sb.append(to.getYear()).append(" ").append(0).append(",");
+        sb.append(from.getYear()).append(" ").append(0);
+        String polygon = "'POLYGON((" + sb.toString() + "))'";
+        return publicationMapper.getByTitleAndYearPolygon(from, to, title, polygon);
     }
 }
