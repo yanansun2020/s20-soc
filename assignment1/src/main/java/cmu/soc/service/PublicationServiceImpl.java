@@ -221,6 +221,16 @@ public class PublicationServiceImpl implements PublicationService {
         //to build the polygon
         SearchRegion region = new SearchRegion((Integer.parseInt(yearFrom) - 1), 1, (Integer.parseInt(yearTo) + 1), 12);
         List<Publication> publications = getByYearAndTitle(keyword, region, numResultsToSkip, numResultsToReturn);
+        for(Publication publication : publications){
+            String authorList = getAuthorByPid(publication.getId());
+            publication.setAuthor(authorList);
+            publication.setId(null);
+            publication.setEe(publication.getEe().replaceAll("$", " "));
+        }
         return publications.toArray(new Publication[publications.size()]);
+    }
+
+    public String getAuthorByPid(Long id) {
+        return publicationMapper.getAuthorByPid(id);
     }
 }

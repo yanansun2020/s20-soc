@@ -111,4 +111,11 @@ public class PublicationServiceImplTest {
         //System.out.println(XQuery.getByString("Performance Impact of Web Service Migration in Embedded Environments."));
         publicationService.spacialSearch("Performance Impact of Web Service Migration in Embedded Environments","2005", "2006", 0, 10);
     }
+
+    @Test
+    public void testAuthors(){
+        //System.out.println(XQuery.getByString("Performance Impact of Web Service Migration in Embedded Environments."));
+        String result = publicationService.getAuthorByPid(4181l);
+        System.out.print("1");
+    }
 }

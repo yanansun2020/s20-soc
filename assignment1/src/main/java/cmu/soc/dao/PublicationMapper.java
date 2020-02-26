@@ -37,4 +37,5 @@ public interface PublicationMapper {
                                                @Param("skip") Integer skip,
                                                @Param("pageCount") Integer pageCount);
 
+    String getAuthorByPid(Long id);
 }

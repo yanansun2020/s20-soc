@@ -56,5 +56,5 @@ public interface PublicationService {
 
     Publication[] spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToRetur);
 
-
+    String getAuthorByPid(Long id);
 }
