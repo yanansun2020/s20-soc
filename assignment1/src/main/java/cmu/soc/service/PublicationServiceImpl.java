@@ -197,9 +197,9 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public void buildLucenceIndex() {
+    public Integer buildLucenceIndex() {
         List<Publication> allPublications = getAllPublications();
-        lucenceService.buildIndex(allPublications);
+        return lucenceService.buildIndex(allPublications);
     }
 
     @Override

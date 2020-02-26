@@ -145,7 +145,7 @@ public class LucenceService {
 
         doc.add(new TextField("author", author, Field.Store.YES));
         // use a string field for isbn because we don't want it tokenized
-        doc.add(new StringField("isbn", isbn, Field.Store.YES));
+        //doc.add(new StringField("isbn", isbn, Field.Store.YES));
         w.addDocument(doc);
     }
 

@@ -50,7 +50,7 @@ public interface PublicationService {
 
     //List<Publication> getByYearAndTitle(String yearFrom, String yearTo, String title);
 
-    void buildLucenceIndex();
+    Integer buildLucenceIndex();
 
     List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn);
 
