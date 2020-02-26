@@ -138,7 +138,7 @@ public class LucenceService {
             Publication publication = new Publication();
             publication.setTitle(doc.get("title"));
             publication.setAuthor(doc.get("author"));
-            publications[++startIndex] = publication;
+            publications[startIndex++] = publication;
         }
     }
 
