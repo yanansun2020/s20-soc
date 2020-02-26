@@ -109,6 +109,6 @@ public class PublicationServiceImplTest {
     @Test
     public void testCoordinate(){
         //System.out.println(XQuery.getByString("Performance Impact of Web Service Migration in Embedded Environments."));
-        publicationService.getByYearAndTitle("2005", "2006", "Performance Impact of Web Service Migration in Embedded Environments");
+        publicationService.spacialSearch("Performance Impact of Web Service Migration in Embedded Environments","2005", "2006", 0, 10);
     }
 }

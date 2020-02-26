@@ -33,6 +33,8 @@ public interface PublicationMapper {
     List<Publication> getByTitleAndYearPolygon(@Param("from")SearchPublicationYear from,
                                                @Param("to") SearchPublicationYear to,
                                                @Param("title") String title,
-                                               @Param("polygon") String polygon);
+                                               @Param("polygon") String polygon,
+                                               @Param("skip") Integer skip,
+                                               @Param("pageCount") Integer pageCount);
 
 }

@@ -88,7 +88,8 @@
         SELECT p.*, GROUP_CONCAT(a.name, ' ') as author FROM publication AS p JOIN pub_author AS pa ON p.id =pa.pub_id JOIN author AS a ON pa.author_id =a.id
     </select>
     <select id="getByTitleAndYearPolygon" resultType="cmu.soc.dao.entity.Publication">
-        select * from publication where title like CONCAT('%',#{title},'%') and ST_CONTAINS( ST_GEOMFROMTEXT(#{polygon}), coordinate_year)
+        select * from publication where title like CONCAT('%',#{title},'%') and  ST_CONTAINS(ST_GEOMFROMTEXT(#{polygon}
+        ), coordinate_year) order by id desc limit #{skip}, #{pageCount}
     </select>
 
 </mapper>
