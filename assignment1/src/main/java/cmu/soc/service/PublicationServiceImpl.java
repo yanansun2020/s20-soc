@@ -203,9 +203,9 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn) {
+    public Publication[] basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn) {
         if (StringUtils.isEmpty(keyword)) {
-            return Collections.emptyList();
+            return null;
         }
         if (numResultsToReturn <= 0) {
             numResultsToReturn = 10;
@@ -214,12 +214,13 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public List<Publication> spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToReturn) {
+    public Publication[] spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToReturn) {
         if (StringUtils.isEmpty(keyword)) {
-            return Collections.emptyList();
+            return null;
         }
         //to build the polygon
         SearchRegion region = new SearchRegion((Integer.parseInt(yearFrom) - 1), 1, (Integer.parseInt(yearTo) + 1), 12);
-        return getByYearAndTitle(keyword, region, numResultsToSkip, numResultsToReturn);
+        List<Publication> publications = getByYearAndTitle(keyword, region, numResultsToSkip, numResultsToReturn);
+        return publications.toArray(new Publication[publications.size()]);
     }
 }

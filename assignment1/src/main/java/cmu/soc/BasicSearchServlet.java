@@ -3,6 +3,7 @@ package cmu.soc;
 import cmu.soc.dao.entity.Publication;
 import cmu.soc.service.PublicationService;
 import cmu.soc.service.PublicationServiceImpl;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class BasicSearchServlet extends HttpServlet {
             out.println("<h3>Please type in numReturn</h3>");
             return;
         }
-        List<Publication> publicationList = publicationService.basicSearch(keyword, Integer.parseInt(skip), Integer.parseInt(numReturn));
-        out.println(publicationList);
+        Publication[] publicationList = publicationService.basicSearch(keyword, Integer.parseInt(skip), Integer.parseInt(numReturn));
+        out.println(new Gson().toJson(publicationList));
     }
 }

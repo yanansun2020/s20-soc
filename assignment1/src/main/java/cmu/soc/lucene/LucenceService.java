@@ -97,7 +97,7 @@ public class LucenceService {
         }
     }
 
-    public List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn){
+    public Publication[] basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn){
         // when no field is explicitly specified in the query.
         IndexReader reader = null;
         try {
@@ -114,37 +114,31 @@ public class LucenceService {
             searcher.search(q2, collector2);
             ScoreDoc[] titleHits = collector.topDocs(numResultsToSkip).scoreDocs;
             ScoreDoc[] authorHits = collector2.topDocs(numResultsToSkip).scoreDocs;
-            reader.close();
-            return buildSearchResulrByHits(titleHits, authorHits, searcher);
+            Publication[] result = buildSearchResulrByHits(titleHits, authorHits, searcher);
+            return result;
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }
 
-    private List<Publication> buildSearchResulrByHits(ScoreDoc[] titleHits, ScoreDoc[] authorHits, IndexSearcher indexSearcher) throws IOException {
-        List<Publication> publications = new ArrayList<>();
-        buildResultByhits(titleHits, publications, indexSearcher);
-        buildResultByhits(authorHits, publications, indexSearcher);
+    private Publication[] buildSearchResulrByHits(ScoreDoc[] titleHits, ScoreDoc[] authorHits, IndexSearcher indexSearcher) throws IOException {
+        Publication[] publications = new Publication[titleHits.length + authorHits.length];
+        buildResultByhits(titleHits, publications, indexSearcher, 0);
+        buildResultByhits(authorHits, publications, indexSearcher, titleHits.length);
         return publications;
 
     }
-    private void buildResultByhits(ScoreDoc[] hits,  List<Publication> publications, IndexSearcher indexSearcher) throws IOException {
+    private void buildResultByhits(ScoreDoc[] hits,  Publication[] publications, IndexSearcher indexSearcher, int startIndex) throws IOException {
         for (ScoreDoc scoreDoc : hits) {
             int docId = scoreDoc.doc;
             Document doc = indexSearcher.doc(docId);
             Publication publication = new Publication();
             publication.setTitle(doc.get("title"));
             publication.setAuthor(doc.get("author"));
-            publications.add(publication);
+            publications[++startIndex] = publication;
         }
     }
 
