@@ -25,7 +25,7 @@ import java.util.List;
 
 public class LucenceService {
     private static StandardAnalyzer analyzer = new StandardAnalyzer();
-    private Directory index = new RAMDirectory();
+    private static Directory index = new RAMDirectory();
     public static void main(String[] args) throws IOException, ParseException {
         // 0. Specify the analyzer for tokenizing text.
         // The same analyzer should be used for indexing and searchingPublicationService
@@ -90,6 +90,7 @@ public class LucenceService {
             for(Publication publication : allPublications ){
                 addDoc(indexWriter, publication.getTitle(), publication.getIsbn(),publication.getAuthor());
             }
+            indexWriter.close();
             return 1;
         } catch (IOException e) {
            return 0;
@@ -98,13 +99,14 @@ public class LucenceService {
 
     public List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn){
         // when no field is explicitly specified in the query.
+        IndexReader reader = null;
         try {
             Query q = new QueryParser("title", analyzer).parse(keyword);
             Query q2 = new QueryParser("author", analyzer).parse(keyword);
             // 3. search
             int hitsPerPage = numResultsToReturn;
             int totalThresHold = 1000;
-            IndexReader reader = DirectoryReader.open(index);
+            reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
             searcher.search(q, collector);
@@ -112,11 +114,18 @@ public class LucenceService {
             searcher.search(q2, collector2);
             ScoreDoc[] titleHits = collector.topDocs(numResultsToSkip).scoreDocs;
             ScoreDoc[] authorHits = collector2.topDocs(numResultsToSkip).scoreDocs;
+            reader.close();
             return buildSearchResulrByHits(titleHits, authorHits, searcher);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
