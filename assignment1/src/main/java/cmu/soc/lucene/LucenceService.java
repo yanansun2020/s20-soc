@@ -17,11 +17,8 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
-import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.RAMDirectory;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -33,48 +30,6 @@ public class LucenceService {
     public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = "F:\\Documents\\a-cmu\\tmp\\lucene.index";
     private static StandardAnalyzer analyzer = new StandardAnalyzer();
     private static FSDirectory index;
-
-    //private static Directory index = new FilterDirectory();
-    public static void main(String[] args) throws IOException, ParseException {
-        // 0. Specify the analyzer for tokenizing text.
-        // The same analyzer should be used for indexing and searchingPublicationService
-        StandardAnalyzer analyzer = new StandardAnalyzer();
-
-        // 1. create the index
-        Directory index = new RAMDirectory();
-        IndexWriterConfig config = new IndexWriterConfig(analyzer);
-        IndexWriter w = new IndexWriter(index, config);
-        addDocTest(w, "Lucene in Action", "Yanan Sun", "Yanan Sun");
-        addDocTest(w, "Lucene for Dummies", "Liang Hao", "Liang Hao");
-        addDocTest(w, "Managing Gigabytes", "Yu Jia", "Yu Jia");
-        addDocTest(w, "The Art of Computer Science", "Mi Xiao", "Mi Xiao");
-
-        w.close();
-
-        // 2. query
-        String querystr = args.length > 0 ? args[0] : "lucene Yu";
-        // the "title" arg specifies the default field to use
-        // when no field is explicitly specified in the query.
-       // Query q = new QueryParser("title", analyzer).parse(querystr);
-        QueryParser queryParser2 = new MultiFieldQueryParser(new String[]{"title","author"},analyzer);
-        Query query = queryParser2.parse(querystr);
-        // 3. search
-        int hitsPerPage = 10;
-        int totalThresHold = 1000;
-        IndexReader reader = DirectoryReader.open(index);
-        IndexSearcher searcher = new IndexSearcher(reader);
-        TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
-        searcher.search(query, collector);
-        ScoreDoc[] hits = collector.topDocs(0).scoreDocs;
-        // 4. display results
-        System.out.println("Found " + hits.length + " hits. in q1 for title");
-        for (int i = 0; i < hits.length; ++i) {
-            int docId = hits[i].doc;
-            Document d = searcher.doc(docId);
-            System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
-        }
-        reader.close();
-    }
 
     public Integer buildIndex(List<Publication> allPublications) {
         if (allPublications == null || allPublications.isEmpty()) {
@@ -103,14 +58,11 @@ public class LucenceService {
         try {
             QueryParser queryParser2 = new MultiFieldQueryParser(new String[]{"title","author"},analyzer);
             Query query = queryParser2.parse(keyword);
-            // 3. search
-            int hitsPerPage = numResultsToReturn;
             //the total publication
-            int totalThresHold = HITS_MAX_PAGE;
             index = FSDirectory.open(Paths.get(F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE));
             reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
-            TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
+            TopScoreDocCollector collector = TopScoreDocCollector.create(numResultsToReturn, HITS_MAX_PAGE);
             searcher.search(query, collector);
             ScoreDoc[] titleHits = collector.topDocs(numResultsToSkip).scoreDocs;
             List<Publication> result = buildSearchResulrByHits(titleHits, searcher);
