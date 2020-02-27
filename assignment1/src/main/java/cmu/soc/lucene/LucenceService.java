@@ -27,7 +27,7 @@ import java.util.List;
 public class LucenceService {
     public static final int HITS_MAX_PAGE = 4180;
     //public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = System.getenv("java.io.tmpdir" + "lucene.index");
-    public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = "F:\\Documents\\a-cmu\\tmp\\lucene.index";
+    public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = System.getenv("LUCENE_INDEX");
     private static StandardAnalyzer analyzer = new StandardAnalyzer();
     private static FSDirectory index;
 

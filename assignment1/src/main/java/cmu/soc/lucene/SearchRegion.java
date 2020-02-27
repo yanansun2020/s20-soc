@@ -14,4 +14,10 @@ public class SearchRegion {
     private int monthLow;
     private int yearHigh;
     private int monthHigh;
+    //this.getClass().getResource("").getPath()
+    public static void main(String[] args){
+
+        System.out.print( System.getProperty("LUCENE_INDEX"));
+        System.out.print( System.getenv("LUCENE_INDEX"));
+    }
 }
