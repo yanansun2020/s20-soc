@@ -62,7 +62,7 @@ public class LucenceService {
             index = FSDirectory.open(Paths.get(F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE));
             reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
-            TopScoreDocCollector collector = TopScoreDocCollector.create(numResultsToReturn, HITS_MAX_PAGE);
+            TopScoreDocCollector collector = TopScoreDocCollector.create(numResultsToSkip + numResultsToReturn, HITS_MAX_PAGE);
             searcher.search(query, collector);
             ScoreDoc[] titleHits = collector.topDocs(numResultsToSkip).scoreDocs;
             List<Publication> result = buildSearchResulrByHits(titleHits, searcher);
