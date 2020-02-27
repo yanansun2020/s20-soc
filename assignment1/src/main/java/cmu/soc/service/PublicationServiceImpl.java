@@ -231,13 +231,24 @@ public class PublicationServiceImpl implements PublicationService {
         List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, LucenceService.HITS_MAX_PAGE);
         Collections.sort(basicSearchResult);
         Collections.sort(spatialSearchResult);
-        List<Publication> result = new ArrayList<>();
+        //get the intersection of two list
+        List<Publication> intersection = new ArrayList<>();
         for(Publication basicResult : basicSearchResult){
             for(Publication spatialResult : spatialSearchResult){
                 if(basicResult.getTitle().equals(spatialResult.getTitle())){
-                    result.add(spatialResult);
+                    intersection.add(spatialResult);
                 }
             }
+        }
+        //get result order by title
+        if(intersection.size() <= numResultsToSkip ){
+            return new ArrayList<>();
+        }
+        //adapt skip
+        List<Publication> result = new ArrayList<>();
+        int resultSize = intersection.size() < numResultsToSkip + numResultsToReturn? intersection.size(): numResultsToSkip + numResultsToReturn;
+        for(int i = numResultsToSkip; i < resultSize; i++){
+            result.add(intersection.get(i));
         }
         return result;
     }

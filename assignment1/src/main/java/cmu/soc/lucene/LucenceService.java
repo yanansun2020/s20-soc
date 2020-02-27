@@ -105,6 +105,7 @@ public class LucenceService {
         writer.updateDocument(new Term("id", id+""), doc);
     }
 
+    //For test
     private static void addDocTest(IndexWriter writer, String title, String author, String name) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("title", title, Field.Store.YES));

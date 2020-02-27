@@ -21,8 +21,8 @@ public class Publication extends PaperDtd implements Comparable<Publication> {
             return 0;
         }
         if(p.getTitle().compareTo(this.getTitle()) > 0){
-            return -1;
+            return 1;
         }
-        return 1;
+        return -1;
     }
 }
