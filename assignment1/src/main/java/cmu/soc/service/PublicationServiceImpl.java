@@ -229,8 +229,8 @@ public class PublicationServiceImpl implements PublicationService {
         }
         //get from basic search
         List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, LucenceService.HITS_MAX_PAGE);
-        Collections.sort(basicSearchResult);
-        Collections.sort(spatialSearchResult);
+        //Collections.sort(basicSearchResult);
+        //Collections.sort(spatialSearchResult);
         //get the intersection of two list
         List<Publication> intersection = new ArrayList<>();
         for(Publication basicResult : basicSearchResult){
