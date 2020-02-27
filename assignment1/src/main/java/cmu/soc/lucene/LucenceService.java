@@ -10,6 +10,7 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -54,20 +55,17 @@ public class LucenceService {
         String querystr = args.length > 0 ? args[0] : "lucene Yu";
         // the "title" arg specifies the default field to use
         // when no field is explicitly specified in the query.
-        Query q = new QueryParser("title", analyzer).parse(querystr);
-        Query q2 = new QueryParser("author", analyzer).parse(querystr);
-
+       // Query q = new QueryParser("title", analyzer).parse(querystr);
+        QueryParser queryParser2 = new MultiFieldQueryParser(new String[]{"title","author"},analyzer);
+        Query query = queryParser2.parse(querystr);
         // 3. search
         int hitsPerPage = 10;
         int totalThresHold = 1000;
         IndexReader reader = DirectoryReader.open(index);
         IndexSearcher searcher = new IndexSearcher(reader);
         TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
-        searcher.search(q, collector);
-        TopScoreDocCollector collector2 = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
-        searcher.search(q2, collector2);
+        searcher.search(query, collector);
         ScoreDoc[] hits = collector.topDocs(0).scoreDocs;
-        ScoreDoc[] hits2 = collector2.topDocs(0).scoreDocs;
         // 4. display results
         System.out.println("Found " + hits.length + " hits. in q1 for title");
         for (int i = 0; i < hits.length; ++i) {
@@ -75,15 +73,6 @@ public class LucenceService {
             Document d = searcher.doc(docId);
             System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
         }
-
-        System.out.println("Found " + hits2.length + " hits. inq2 for author");
-        for (int i = 0; i < hits2.length; ++i) {
-            int docId = hits2[i].doc;
-            Document d = searcher.doc(docId);
-            System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
-        }
-        // reader can only be closed when there
-        // is no need to access the documents any more.
         reader.close();
     }
 
@@ -112,8 +101,8 @@ public class LucenceService {
         // when no field is explicitly specified in the query.
         IndexReader reader = null;
         try {
-            Query q = new QueryParser("title", analyzer).parse(keyword);
-            Query q2 = new QueryParser("author", analyzer).parse(keyword);
+            QueryParser queryParser2 = new MultiFieldQueryParser(new String[]{"title","author"},analyzer);
+            Query query = queryParser2.parse(keyword);
             // 3. search
             int hitsPerPage = numResultsToReturn;
             //the total publication
@@ -122,12 +111,9 @@ public class LucenceService {
             reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
-            searcher.search(q, collector);
-            TopScoreDocCollector collector2 = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
-            searcher.search(q2, collector2);
+            searcher.search(query, collector);
             ScoreDoc[] titleHits = collector.topDocs(numResultsToSkip).scoreDocs;
-            ScoreDoc[] authorHits = collector2.topDocs(numResultsToSkip).scoreDocs;
-            List<Publication> result = buildSearchResulrByHits(titleHits, authorHits, searcher);
+            List<Publication> result = buildSearchResulrByHits(titleHits, searcher);
             return result;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -137,10 +123,9 @@ public class LucenceService {
         return null;
     }
 
-    private List<Publication> buildSearchResulrByHits(ScoreDoc[] titleHits, ScoreDoc[] authorHits, IndexSearcher indexSearcher) throws IOException {
+    private List<Publication> buildSearchResulrByHits(ScoreDoc[] titleHits, IndexSearcher indexSearcher) throws IOException {
         List<Publication> publications = new ArrayList<>();
         buildResultByhits(titleHits, publications, indexSearcher);
-        buildResultByhits(authorHits, publications, indexSearcher);
         return publications;
 
     }
