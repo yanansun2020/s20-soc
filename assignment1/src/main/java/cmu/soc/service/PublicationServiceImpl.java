@@ -229,7 +229,7 @@ public class PublicationServiceImpl implements PublicationService {
             publication.setEe(publication.getEe().replaceAll("$", " "));
         }
         //get from basic search
-        List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, Integer.MAX_VALUE);
+        List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, LucenceService.HITS_PER_PAGE);
         basicSearchResult.retainAll(spatialSearchResult);
         List<Publication> result = new ArrayList<>();
         for(int i = numResultsToSkip; i < numResultsToSkip + numResultsToReturn; i++){

@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LucenceService {
+    public static final int HITS_PER_PAGE = 4180;
+    public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = "F:\\Documents\\a-cmu\\tmp\\index.lucene";
     private static StandardAnalyzer analyzer = new StandardAnalyzer();
     private static FSDirectory index;
 
@@ -110,7 +112,9 @@ public class LucenceService {
             Query q2 = new QueryParser("author", analyzer).parse(keyword);
             // 3. search
             int hitsPerPage = numResultsToReturn;
-            int totalThresHold = Integer.MAX_VALUE;
+            //the total publication
+            int totalThresHold = HITS_PER_PAGE;
+            index = FSDirectory.open(Paths.get(F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE));
             reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
