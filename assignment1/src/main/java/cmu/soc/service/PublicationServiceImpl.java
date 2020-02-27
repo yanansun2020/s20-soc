@@ -19,6 +19,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -203,7 +204,7 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public Publication[] basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn) {
+    public List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn) {
         if (StringUtils.isEmpty(keyword)) {
             return null;
         }
@@ -214,20 +215,27 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public Publication[] spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToReturn) {
+    public List<Publication> spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToReturn) {
         if (StringUtils.isEmpty(keyword)) {
             return null;
         }
         //to build the polygon
         SearchRegion region = new SearchRegion((Integer.parseInt(yearFrom) - 1), 1, (Integer.parseInt(yearTo) + 1), 12);
-        List<Publication> publications = getByYearAndTitle(keyword, region, numResultsToSkip, numResultsToReturn);
-        for(Publication publication : publications){
+        List<Publication> spatialSearchResult = getByYearAndTitle(keyword, region, numResultsToSkip, numResultsToReturn);
+        for(Publication publication : spatialSearchResult){
             String authorList = getAuthorByPid(publication.getId());
             publication.setAuthor(authorList);
             publication.setId(null);
             publication.setEe(publication.getEe().replaceAll("$", " "));
         }
-        return publications.toArray(new Publication[publications.size()]);
+        //get from basic search
+        List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, Integer.MAX_VALUE);
+        basicSearchResult.retainAll(spatialSearchResult);
+        List<Publication> result = new ArrayList<>();
+        for(int i = numResultsToSkip; i < numResultsToSkip + numResultsToReturn; i++){
+            result.add(basicSearchResult.get(i));
+        }
+        return basicSearchResult;
     }
 
     public String getAuthorByPid(Long id) {

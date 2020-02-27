@@ -52,9 +52,9 @@ public interface PublicationService {
 
     Integer buildLucenceIndex();
 
-    Publication[] basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn);
+    List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn);
 
-    Publication[] spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToRetur);
+    List<Publication> spacialSearch(String keyword, String yearFrom, String yearTo, int numResultsToSkip, int numResultsToRetur);
 
     String getAuthorByPid(Long id);
 }

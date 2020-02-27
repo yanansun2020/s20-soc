@@ -90,7 +90,7 @@
     </select>
     <select id="getByTitleAndYearPolygon" resultType="cmu.soc.dao.entity.Publication">
         select * from publication where title like CONCAT('%',#{title},'%') and  ST_CONTAINS(ST_GEOMFROMTEXT(#{polygon}
-        ), coordinate_year) order by id desc limit #{skip}, #{pageCount}
+        ), coordinate_year) order by id
     </select>
     <select id="getAuthorByPid" resultType="java.lang.String">
         select GROUP_CONCAT(a.name) from pub_author as pa join author as a on pa.author_id=a.id where pa.pub_id=#{id}

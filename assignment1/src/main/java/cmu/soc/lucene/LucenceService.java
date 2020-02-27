@@ -4,7 +4,6 @@ import cmu.soc.dao.entity.Publication;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -17,15 +16,19 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LucenceService {
     private static StandardAnalyzer analyzer = new StandardAnalyzer();
-    private static Directory index = new RAMDirectory();
+    private static FSDirectory index;
+
+    //private static Directory index = new FilterDirectory();
     public static void main(String[] args) throws IOException, ParseException {
         // 0. Specify the analyzer for tokenizing text.
         // The same analyzer should be used for indexing and searchingPublicationService
@@ -62,14 +65,14 @@ public class LucenceService {
         ScoreDoc[] hits2 = collector2.topDocs(0).scoreDocs;
         // 4. display results
         System.out.println("Found " + hits.length + " hits. in q1 for title");
-        for(int i=0;i<hits.length;++i) {
+        for (int i = 0; i < hits.length; ++i) {
             int docId = hits[i].doc;
             Document d = searcher.doc(docId);
             System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
         }
 
         System.out.println("Found " + hits2.length + " hits. inq2 for author");
-        for(int i=0;i<hits2.length;++i) {
+        for (int i = 0; i < hits2.length; ++i) {
             int docId = hits2[i].doc;
             Document d = searcher.doc(docId);
             System.out.println((i + 1) + ". " + d.get("isbn") + "\t" + d.get("title") + "\t" + d.get("author"));
@@ -78,26 +81,28 @@ public class LucenceService {
         // is no need to access the documents any more.
         reader.close();
     }
-    public Integer buildIndex( List<Publication> allPublications ){
-        if(allPublications == null || allPublications.isEmpty()){
+
+    public Integer buildIndex(List<Publication> allPublications) {
+        if (allPublications == null || allPublications.isEmpty()) {
             return -1;
         }
         // 1. create the index
 
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         try {
+            index = FSDirectory.open(Paths.get("F:\\Documents\\a-cmu\\tmp\\index.lucene"));
             IndexWriter indexWriter = new IndexWriter(index, config);
-            for(Publication publication : allPublications ){
-                addDoc(indexWriter, publication.getTitle(), publication.getIsbn(),publication.getAuthor());
+            for (Publication publication : allPublications) {
+                addDoc(indexWriter, publication.getTitle(), publication.getIsbn(), publication.getAuthor());
             }
             indexWriter.close();
             return 1;
         } catch (IOException e) {
-           return 0;
+            return 0;
         }
     }
 
-    public Publication[] basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn){
+    public List<Publication> basicSearch(String keyword, int numResultsToSkip, int numResultsToReturn) {
         // when no field is explicitly specified in the query.
         IndexReader reader = null;
         try {
@@ -105,7 +110,7 @@ public class LucenceService {
             Query q2 = new QueryParser("author", analyzer).parse(keyword);
             // 3. search
             int hitsPerPage = numResultsToReturn;
-            int totalThresHold = 1000;
+            int totalThresHold = Integer.MAX_VALUE;
             reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
             TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, totalThresHold);
@@ -114,7 +119,7 @@ public class LucenceService {
             searcher.search(q2, collector2);
             ScoreDoc[] titleHits = collector.topDocs(numResultsToSkip).scoreDocs;
             ScoreDoc[] authorHits = collector2.topDocs(numResultsToSkip).scoreDocs;
-            Publication[] result = buildSearchResulrByHits(titleHits, authorHits, searcher);
+            List<Publication> result = buildSearchResulrByHits(titleHits, authorHits, searcher);
             return result;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -124,25 +129,26 @@ public class LucenceService {
         return null;
     }
 
-    private Publication[] buildSearchResulrByHits(ScoreDoc[] titleHits, ScoreDoc[] authorHits, IndexSearcher indexSearcher) throws IOException {
-        Publication[] publications = new Publication[titleHits.length + authorHits.length];
+    private List<Publication> buildSearchResulrByHits(ScoreDoc[] titleHits, ScoreDoc[] authorHits, IndexSearcher indexSearcher) throws IOException {
+        List<Publication> publications = new ArrayList<>();
         buildResultByhits(titleHits, publications, indexSearcher, 0);
         buildResultByhits(authorHits, publications, indexSearcher, titleHits.length);
         return publications;
 
     }
-    private void buildResultByhits(ScoreDoc[] hits,  Publication[] publications, IndexSearcher indexSearcher, int startIndex) throws IOException {
+
+    private void buildResultByhits(ScoreDoc[] hits, List<Publication> publications, IndexSearcher indexSearcher, int startIndex) throws IOException {
         for (ScoreDoc scoreDoc : hits) {
             int docId = scoreDoc.doc;
             Document doc = indexSearcher.doc(docId);
             Publication publication = new Publication();
             publication.setTitle(doc.get("title"));
             publication.setAuthor(doc.get("author"));
-            publications[startIndex++] = publication;
+            publications.add(publication);
         }
     }
 
-    private static void addDoc (IndexWriter w, String title, String isbn, String author) throws IOException {
+    private static void addDoc(IndexWriter w, String title, String isbn, String author) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("title", title, Field.Store.YES));
 

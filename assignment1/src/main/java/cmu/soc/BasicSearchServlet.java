@@ -36,7 +36,7 @@ public class BasicSearchServlet extends HttpServlet {
             out.println("<h3>Please type in numReturn</h3>");
             return;
         }
-        Publication[] publicationList = publicationService.basicSearch(keyword, Integer.parseInt(skip), Integer.parseInt(numReturn));
+        List<Publication> publicationList = publicationService.basicSearch(keyword, Integer.parseInt(skip), Integer.parseInt(numReturn));
         out.println(new Gson().toJson(publicationList));
     }
 }
