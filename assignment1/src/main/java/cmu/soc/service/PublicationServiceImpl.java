@@ -19,7 +19,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -229,13 +228,18 @@ public class PublicationServiceImpl implements PublicationService {
             publication.setEe(publication.getEe().replaceAll("$", " "));
         }
         //get from basic search
-        List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, LucenceService.HITS_PER_PAGE);
-        basicSearchResult.retainAll(spatialSearchResult);
+        List<Publication> basicSearchResult = lucenceService.basicSearch(keyword, 0, LucenceService.HITS_MAX_PAGE);
+        Collections.sort(basicSearchResult);
+        Collections.sort(spatialSearchResult);
         List<Publication> result = new ArrayList<>();
-        for(int i = numResultsToSkip; i < numResultsToSkip + numResultsToReturn; i++){
-            result.add(basicSearchResult.get(i));
+        for(Publication basicResult : basicSearchResult){
+            for(Publication spatialResult : spatialSearchResult){
+                if(basicResult.getTitle().equals(spatialResult.getTitle())){
+                    result.add(spatialResult);
+                }
+            }
         }
-        return basicSearchResult;
+        return result;
     }
 
     public String getAuthorByPid(Long id) {

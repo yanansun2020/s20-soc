@@ -9,6 +9,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -19,14 +20,16 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LucenceService {
-    public static final int HITS_PER_PAGE = 4180;
-    public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = "F:\\Documents\\a-cmu\\tmp\\index.lucene";
+    public static final int HITS_MAX_PAGE = 4180;
+    //public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = System.getenv("java.io.tmpdir" + "lucene.index");
+    public static final String F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE = "F:\\Documents\\a-cmu\\tmp\\lucene.index";
     private static StandardAnalyzer analyzer = new StandardAnalyzer();
     private static FSDirectory index;
 
@@ -40,10 +43,10 @@ public class LucenceService {
         Directory index = new RAMDirectory();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         IndexWriter w = new IndexWriter(index, config);
-        addDoc(w, "Lucene in Action", "193398817", "Yanan Sun");
-        addDoc(w, "Lucene for Dummies", "55320055Z", "Liang Hao");
-        addDoc(w, "Managing Gigabytes", "55063554A", "Yu Jia");
-        addDoc(w, "The Art of Computer Science", "9900333X", "Mi Xiao");
+        addDocTest(w, "Lucene in Action", "Yanan Sun", "Yanan Sun");
+        addDocTest(w, "Lucene for Dummies", "Liang Hao", "Liang Hao");
+        addDocTest(w, "Managing Gigabytes", "Yu Jia", "Yu Jia");
+        addDocTest(w, "The Art of Computer Science", "Mi Xiao", "Mi Xiao");
 
         w.close();
 
@@ -91,11 +94,12 @@ public class LucenceService {
         // 1. create the index
 
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
         try {
-            index = FSDirectory.open(Paths.get("F:\\Documents\\a-cmu\\tmp\\index.lucene"));
+            index = FSDirectory.open(Paths.get(F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE));
             IndexWriter indexWriter = new IndexWriter(index, config);
             for (Publication publication : allPublications) {
-                addDoc(indexWriter, publication.getTitle(), publication.getIsbn(), publication.getAuthor());
+                addDoc(indexWriter, publication.getTitle(), publication.getAuthor(), publication.getId());
             }
             indexWriter.close();
             return 1;
@@ -113,7 +117,7 @@ public class LucenceService {
             // 3. search
             int hitsPerPage = numResultsToReturn;
             //the total publication
-            int totalThresHold = HITS_PER_PAGE;
+            int totalThresHold = HITS_MAX_PAGE;
             index = FSDirectory.open(Paths.get(F_DOCUMENTS_A_CMU_TMP_INDEX_LUCENE));
             reader = DirectoryReader.open(index);
             IndexSearcher searcher = new IndexSearcher(reader);
@@ -135,13 +139,13 @@ public class LucenceService {
 
     private List<Publication> buildSearchResulrByHits(ScoreDoc[] titleHits, ScoreDoc[] authorHits, IndexSearcher indexSearcher) throws IOException {
         List<Publication> publications = new ArrayList<>();
-        buildResultByhits(titleHits, publications, indexSearcher, 0);
-        buildResultByhits(authorHits, publications, indexSearcher, titleHits.length);
+        buildResultByhits(titleHits, publications, indexSearcher);
+        buildResultByhits(authorHits, publications, indexSearcher);
         return publications;
 
     }
 
-    private void buildResultByhits(ScoreDoc[] hits, List<Publication> publications, IndexSearcher indexSearcher, int startIndex) throws IOException {
+    private void buildResultByhits(ScoreDoc[] hits, List<Publication> publications, IndexSearcher indexSearcher) throws IOException {
         for (ScoreDoc scoreDoc : hits) {
             int docId = scoreDoc.doc;
             Document doc = indexSearcher.doc(docId);
@@ -152,14 +156,27 @@ public class LucenceService {
         }
     }
 
-    private static void addDoc(IndexWriter w, String title, String isbn, String author) throws IOException {
+    private static void addDoc(IndexWriter writer, String title, String author, Long id) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("title", title, Field.Store.YES));
 
         doc.add(new TextField("author", author, Field.Store.YES));
+        doc.add(new TextField("id", id+"", Field.Store.YES));
+
         // use a string field for isbn because we don't want it tokenized
         //doc.add(new StringField("isbn", isbn, Field.Store.YES));
-        w.addDocument(doc);
+        writer.updateDocument(new Term("id", id+""), doc);
+    }
+
+    private static void addDocTest(IndexWriter writer, String title, String author, String name) throws IOException {
+        Document doc = new Document();
+        doc.add(new TextField("title", title, Field.Store.YES));
+
+        doc.add(new TextField("author", author, Field.Store.YES));
+
+        // use a string field for isbn because we don't want it tokenized
+        //doc.add(new StringField("isbn", isbn, Field.Store.YES));
+        writer.addDocument( doc);
     }
 
 }
