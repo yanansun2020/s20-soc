@@ -1,0 +1,265 @@
+[{
+	"title": "IEEE International Conference on Web Services, ICWS 2009, Los Angeles, CA, USA, 6-10 July 2009",
+	"address":"Los Angeles, CA, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2009",
+	"isbn": "978-0-7695-3709-2"
+},  {
+	"title": "Proceedings of the International Conference on Web Services, ICWS \u002703, June 23 - 26, 2003, Las Vegas, Nevada, USA",
+	"address":"Las Vegas, Nevada, USA",
+	"booktitle": "IWCS",
+	"publisher": "CSREA Press",
+	"year": "2003",
+	"isbn": "1-892512-49-1"
+},  {
+	"title": "2012 IEEE 19th International Conference on Web Services, Honolulu, HI, USA, June 24-29, 2012",
+	"address":"Honolulu, HI, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2012",
+	"isbn": "978-1-4673-2131-0"
+},  {
+	"title": "IEEE International Conference on Web Services, ICWS 2011, Washington, DC, USA, July 4-9, 2011",
+	"address":"Washington, DC, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2011",
+	"isbn": "978-1-4577-0842-8"
+},  {
+	"title": "2008 IEEE International Conference on Web Services (ICWS 2008), September 23-26, 2008, Beijing, China",
+	"address":" Beijing, China",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2008",
+	"isbn": "978-0-7695-3310-0"
+}, {
+	"title": "2005 IEEE International Conference on Web Services (ICWS 2005), 11-15 July 2005, Orlando, FL, USA",
+	"address":"Orlando, FL, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2005",
+	"isbn": "0-7695-2409-5"
+},  {
+	"title": "Third European Conference on Web Services (ECOWS 2005), 14-16 November 2005, Växjö, Sweden",
+	"address":"Växjö, Sweden",
+	"booktitle": "ECOWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2005",
+	"isbn": "0-7695-2484-2"
+},  {
+	"title": "2018 IEEE International Conference on Web Services, ICWS 2018, San Francisco, CA, USA, July 2-7, 2018",
+	"address":"San Francisco, CA, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE",
+	"year": "2018",
+	"isbn": "978-1-5386-7247-1"
+},{
+	"title": "IEEE International Conference on Web Services, ICWS 2016, San Francisco, CA, USA, June 27 - July 2, 2016",
+	"address":"San Francisco, CA, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2016",
+	"isbn": "978-1-5090-2675-3"
+}, {
+	"title": "2006 IEEE International Conference on Web Services (ICWS 2006), 18-22 September 2006, Chicago, Illinois, USA",
+	"address":"Chicago, Illinois, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2006",
+	"isbn": "0-7695-2669-1"
+}, {
+	"title": "2007 IEEE International Conference on Web Services (ICWS 2007), July 9-13, 2007, Salt Lake City, Utah, USA",
+	"address":"Salt Lake City, Utah, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2007",
+	"isbn": "0-7695-2924-0"
+},  {
+	"title": "2013 IEEE 20th International Conference on Web Services, Santa Clara, CA, USA, June 28 - July 3, 2013",
+	"address":"Santa Clara, CA, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2013",
+	"isbn": "978-0-7695-5025-1"
+},  {
+	"title": "Web Services - ICWS-Europe 2003, International Conference ICWS-Europe 2003, Erfurt, Germany, September 23-24, 2003, Proceedings",
+	"address":"Erfurt, Germany",
+	"booktitle": "ICWS-Europe",
+	"publisher": "Springer",
+	"year": "2003",
+	"isbn": "3-540-20125-4"
+},  {
+	"title": "2017 IEEE International Conference on Web Services, ICWS 2017, Honolulu, HI, USA, June 25-30, 2017",
+	"address":"Honolulu, HI, USA",
+	"booktitle": "ICWS Computer Society",
+	"publisher": "IEEE",
+	"year": "2017",
+	"isbn": "978-1-5386-0752-7"
+}, {
+	"title": "2014 IEEE International Conference on Web Services, ICWS, 2014, Anchorage, AK, USA, June 27 - July 2, 2014",
+	"address":"Anchorage, AK, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2014",
+	"isbn": "978-1-4799-5054-6"
+}, {
+	"title": "2015 IEEE International Conference on Web Services, ICWS 2015, New York, NY, USA, June 27 - July 2, 2015",
+	"address":"New York, NY, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2015",
+	"isbn": "978-1-4673-7272-5"
+}, {
+	"title": "IEEE International Conference on Web Services, ICWS 2010, Miami, Florida, USA, July 5-10, 2010",
+	"address":"Miami, Florida, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2010",
+	"isbn": "978-0-7695-4128-0"
+}, {
+	"title": "Proceedings of the ICWS 2005 Second International Workshop on Semantic and Dynamic Web Processes, SDWP@ICWS 2005, Orlando, Florida, USA, July 11, 2005.",
+	"address":"Orlando, Florida, USA",
+	"booktitle": "SDWP@ICWS",
+	"publisher": "CEUR-WS.org",
+	"year": "2005"
+},  {
+	"title": "Proceedings of the IEEE International Conference on Web Services (ICWS\u002704), June 6-9, 2004, San Diego, California, USA",
+	"address":"San Diego, California, USA",
+	"booktitle": "ICWS",
+	"publisher": "IEEE Computer Society",
+	"year": "2004",
+	"isbn": "0-7695-2167-3"
+},  {
+	"title": "Thirteenth International Conference on Quality Control by Artificial Vision, QCAV 2017, Tokyo, Japan, May 14, 2017",
+	"address":"Tokyo, Japan",
+	"booktitle": "QCAV",
+	"publisher": "SPIE",
+	"year": "2017",
+	"isbn": "9781510611214"
+}, {
+	"title": "Engineering Dederated Information Systems, Proceedings of the 2nd Workshop EFIS\u002799, Kühlungsborn, Germany, May 5-7, 1999",
+	"address":"Kühlungsborn, Germany",
+	"booktitle": "EFIS",
+	"publisher": "Infix, Sankt Augustin",
+	"year": "1999",
+	"isbn": "3-89601-013-1"
+}, {
+	"title": "Engineering Federated Information Systems, Proceedings of the 5th Workshop EFIS 2003, July 17-18 2003, Coventry, UK",
+	"address":"Coventry, UK",
+	"booktitle": "EFIS",
+	"publisher": "aka / IOS Press / infix",
+	"year": "2003",
+	"isbn": "3-89838-041-6"
+},  {
+	"title": "2007 IEEE International Conference on Services Computing - Workshops (SCW 2007), 9-13 July 2007, Salt Lake City, Utah, USA",
+	"address":"Salt Lake City, Utah, USA",
+	"booktitle": "IEEE SCW",
+	"publisher": "IEEE Computer Society",
+	"year": "2007"
+},  {
+	"title": "2009 IEEE International Conference on Services Computing (SCC 2009), 21-25 September 2009, Bangalore, India",
+	"address":"Bangalore, India",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2009",
+	"isbn": "978-0-7695-3811-2"
+},{
+	"title": "2012 IEEE Ninth International Conference on Services Computing, Honolulu, HI, USA, June 24-29, 2012",
+	"address":"Honolulu, HI, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2012",
+	"isbn": "978-1-4673-3049-7"
+},{
+	"title": "IEEE International Conference on Services Computing, SCC 2011, Washington, DC, USA, 4-9 July, 2011",
+	"address":"Washington, DC, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2011",
+	"isbn": "978-1-4577-0863-3"
+}, {
+	"title": "2008 IEEE International Conference on Services Computing (SCC 2008), 8-11 July 2008, Honolulu, Hawaii, USA",
+	"address":"Honolulu, Hawaii, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2008",
+	"isbn": "978-0-7695-3283-7"
+}, {
+	"title": "2005 IEEE International Conference on Services Computing (SCC 2005), 11-15 July 2005, Orlando, FL, USA",
+	"address":"Orlando, FL, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2005",
+	"isbn": "0-7695-2408-7"
+}, {
+	"title": "2018 IEEE International Conference on Services Computing, SCC 2018, San Francisco, CA, USA, July 2-7, 2018",
+	"address":"San Francisco, CA, USA",
+	"booktitle": "SCC",
+	"publisher": "IEEE",
+	"year": "2018",
+	"isbn": "978-1-5386-7250-1"
+}, {
+	"title": "IEEE International Conference on Services Computing, SCC 2016, San Francisco, CA, USA, June 27 - July 2, 2016",
+	"address":"San Francisco, CA, USA",
+	"booktitle": "SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2016",
+	"isbn": "978-1-5090-2628-9"
+}, {
+	"title": "2006 IEEE International Conference on Services Computing (SCC 2006), 18-22 September 2006, Chicago, Illinois, USA",
+	"address":"Chicago, Illinois, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2006",
+	"isbn": "0-7695-2670-5"
+},  {
+	"title": "2007 IEEE International Conference on Services Computing (SCC 2007), 9-13 July 2007, Salt Lake City, Utah, USA",
+	"address":"Salt Lake City, Utah, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2007",
+	"isbn": "0-7695-2925-9"
+}, {
+	"title": "2013 IEEE International Conference on Services Computing, Santa Clara, CA, USA, June 28 - July 3, 2013",
+	"address":"Santa Clara, CA, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2013",
+	"isbn": "978-0-7695-5026-8"
+}, {
+	"title": "2017 IEEE International Conference on Services Computing, SCC 2017, Honolulu, HI, USA, June 25-30, 2017",
+	"address":"Honolulu, HI, USA",
+	"booktitle": "SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2017",
+	"isbn": "978-1-5386-2005-2"
+}, {
+	"title": "IEEE International Conference on Services Computing, SCC 2014, Anchorage, AK, USA, June 27 - July 2, 2014",
+	"address":"Anchorage, AK, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2014",
+	"isbn": "978-1-4799-5065-2"
+}, {
+	"title": "2015 IEEE International Conference on Services Computing, SCC 2015, New York City, NY, USA, June 27 - July 2, 2015",
+	"address":"New York City, NY, USA",
+	"booktitle": "SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2015",
+	"isbn": "978-1-4673-7281-7"
+}, {
+	"title": "2010 IEEE International Conference on Services Computing, SCC 2010, Miami, Florida, USA, July 5-10, 2010",
+	"address":"Miami, Florida, USA",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2010",
+	"isbn": "978-0-7695-4126-6"
+},  {
+	"title": "2004 IEEE International Conference on Services Computing (SCC 2004), 15-18 September 2004, Shanghai, China",
+	"address":"Shanghai, China",
+	"booktitle": "IEEE SCC",
+	"publisher": "IEEE Computer Society",
+	"year": "2004",
+	"isbn": "0-7695-2225-4"
+}]
