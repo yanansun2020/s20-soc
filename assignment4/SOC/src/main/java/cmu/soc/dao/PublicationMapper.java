@@ -33,4 +33,6 @@ public interface PublicationMapper {
     Long addAbstract(@Param("pubAbs") PubAbs pubAbs);
 
    PubAbs getAbstract(@Param("title") String title);
+
+   Publication getPubByTitle(@Param("pub")Publication publication);
 }

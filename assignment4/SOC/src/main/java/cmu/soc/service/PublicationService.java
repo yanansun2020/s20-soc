@@ -55,4 +55,6 @@ public interface PublicationService {
 
     PubAbs getAbsByTitile(String title);
 
+    Publication getPubByTitle(String title);
+
 }

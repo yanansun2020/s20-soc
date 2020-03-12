@@ -1,5 +1,8 @@
 package cmu.soc.category;
 
+import cmu.soc.dao.entity.Publication;
+import cmu.soc.service.PublicationService;
+import cmu.soc.service.PublicationServiceImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,9 +13,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.util.List;
 
 public class HandleMetadata {
-
+    static PublicationService publicationService = new PublicationServiceImpl();
     public static void parseMetadata() throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -37,15 +41,8 @@ public class HandleMetadata {
                     }
                 }
                 try {
-                    String fileName = title;
-                    if(fileName.endsWith(".")){
-                        fileName = title.substring(0, title.length() -1);
-                    }
-                    fileName = fileName.replace("\"", "");
-                    fileName = fileName.replaceAll("\\\\", "");
-                    fileName = fileName.replaceAll("\\?", "");
-                    fileName = fileName.replaceAll("\\*", "");
-                    BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\Documents\\a-cmu\\18655SOC\\code\\mallet\\" + fileName +".txt"));
+                    Publication publication = publicationService.getPubByTitle(title);
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\Documents\\a-cmu\\18655SOC\\code\\mallet\\" + publication.getId() +".txt"));
                     writer.write(paper_abstract);
                     writer.close();
                 } catch (IOException e) {

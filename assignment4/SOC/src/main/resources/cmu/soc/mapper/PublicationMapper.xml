@@ -100,5 +100,11 @@
     <select id="getAbstract" resultMap="abstractMap">
         select * from pub_abstract where title=#{title}
     </select>
+    <select id="getPubByTitle" resultType="cmu.soc.dao.entity.Publication">
+        SELECT p.* FROM publication as p WHERE 1=1
+        <if test="pub.title != null and pub.title != ''">
+            and p.title =#{pub.title}
+        </if>
+    </select>
 
 </mapper>

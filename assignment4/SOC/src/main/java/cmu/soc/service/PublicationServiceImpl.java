@@ -143,6 +143,16 @@ public class PublicationServiceImpl implements PublicationService{
         return publicationMapper.getAbstract(title);
     }
 
+    @Override
+    public Publication getPubByTitle(String title) {
+        if(StringUtils.isEmpty(title)){
+            return null;
+        }
+        Publication searchVo = new Publication();
+        searchVo.setTitle(title);
+        return publicationMapper.getPubByTitle(searchVo);
+    }
+
     /**
      * add author name
      * @param publications
