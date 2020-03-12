@@ -42,8 +42,10 @@ public class HandleMetadata {
                         fileName = title.substring(0, title.length() -1);
                     }
                     fileName = fileName.replace("\"", "");
-                    fileName += i;
-                    BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\Documents\\a-cmu\\18655SOC\\code\\mallet\\" + i +".txt"));
+                    fileName = fileName.replaceAll("\\\\", "");
+                    fileName = fileName.replaceAll("\\?", "");
+                    fileName = fileName.replaceAll("\\*", "");
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\Documents\\a-cmu\\18655SOC\\code\\mallet\\" + fileName +".txt"));
                     writer.write(paper_abstract);
                     writer.close();
                 } catch (IOException e) {
