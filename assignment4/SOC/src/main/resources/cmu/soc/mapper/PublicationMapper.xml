@@ -104,7 +104,7 @@
         SELECT p.* FROM publication as p WHERE 1=1
         <if test="pub.title != null and pub.title != ''">
             and p.title =#{pub.title}
-        </if>
+        </if> limit 1
     </select>
 
 </mapper>

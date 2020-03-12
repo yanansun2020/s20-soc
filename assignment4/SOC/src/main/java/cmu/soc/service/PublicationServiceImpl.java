@@ -114,11 +114,10 @@ public class PublicationServiceImpl implements PublicationService{
         JdbcExecute jdbcExecute = new JdbcExecute();
         for(PaperAbstracts paperAbstracts1: paperAbstracts){
             String title = paperAbstracts1.getTitle();
-            List<Publication> publications = getPublications(title);
-            if(publications == null || publications.size() == 0){
+            Publication publication = getPubByTitle(title);
+            if(publication == null){
                 continue;
             }
-            Publication publication = publications.get(0);
             PubAbs pubAbs = new PubAbs();
             pubAbs.setPubId(publication.getId());
             pubAbs.setAbstracts(paperAbstracts1.getAbstracts());
