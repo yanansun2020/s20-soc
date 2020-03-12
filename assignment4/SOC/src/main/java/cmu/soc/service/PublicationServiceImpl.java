@@ -5,6 +5,7 @@ import cmu.soc.dao.entity.Author;
 import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.PubAuthor;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.mysql.JdbcExecute;
 import cmu.soc.parser.PaperAbstracts;
 import cmu.soc.parser.PaperDtd;
 import cmu.soc.parser.PaperDtdAttribute;
@@ -18,6 +19,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -108,7 +110,8 @@ public class PublicationServiceImpl implements PublicationService{
         return publications;
     }
 
-    public void addAbstract(List<PaperAbstracts> paperAbstracts) {
+    public void addAbstract(List<PaperAbstracts> paperAbstracts) throws SQLException, ClassNotFoundException {
+        JdbcExecute jdbcExecute = new JdbcExecute();
         for(PaperAbstracts paperAbstracts1: paperAbstracts){
             String title = paperAbstracts1.getTitle();
             List<Publication> publications = getPublications(title);
@@ -119,7 +122,10 @@ public class PublicationServiceImpl implements PublicationService{
             PubAbs pubAbs = new PubAbs();
             pubAbs.setPubId(publication.getId());
             pubAbs.setAbstracts(paperAbstracts1.getAbstracts());
-            addAbstractToDB(pubAbs);
+            pubAbs.setTitle(paperAbstracts1.getTitle());
+            pubAbs.setEe(paperAbstracts1.getEe());
+            jdbcExecute.insert(pubAbs);
+            //addAbstractToDB(pubAbs);
         }
     }
 

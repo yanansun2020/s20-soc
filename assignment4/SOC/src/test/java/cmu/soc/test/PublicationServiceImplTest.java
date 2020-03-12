@@ -3,6 +3,7 @@ package cmu.soc.test;
 import cmu.soc.dao.entity.Author;
 import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.mysql.JdbcExecute;
 import cmu.soc.parser.PaperAbstracts;
 import cmu.soc.service.PublicationService;
 import cmu.soc.service.PublicationServiceImpl;
@@ -10,6 +11,7 @@ import cmu.soc.xquery.XQuery;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class PublicationServiceImplTest {
@@ -111,9 +113,17 @@ public class PublicationServiceImplTest {
         paperAbstracts.setEe("test");
         paperAbstracts.setAbstracts("ee");
         publicationService.addAbstractToDB( paperAbstracts);
+        try {
+            JdbcExecute jdbcExecute = new JdbcExecute();
+            jdbcExecute.insert(paperAbstracts);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        PubAbs pubAbs = publicationService.getAbsByTitile("test");
-        System.out.println("1");
+       /* PubAbs pubAbs = publicationService.getAbsByTitile("test");
+        System.out.println("1");*/
       /*  Author author = new Author();
         author.setName("author");
         publicationService.addAuthor(author);*/

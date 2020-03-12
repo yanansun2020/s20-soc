@@ -5,6 +5,7 @@ import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.Publication;
 import cmu.soc.parser.PaperAbstracts;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PublicationService {
@@ -46,7 +47,7 @@ public interface PublicationService {
      */
     List<Publication> getPublications(String conferenceName, String year);
 
-    void addAbstract(List<PaperAbstracts> paperAbstracts);
+    void addAbstract(List<PaperAbstracts> paperAbstracts) throws SQLException, ClassNotFoundException;
 
     void addAbstractToDB(PubAbs paperAbstracts);
 

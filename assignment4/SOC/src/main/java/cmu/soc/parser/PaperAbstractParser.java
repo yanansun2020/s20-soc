@@ -12,11 +12,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaperAbstractParser {
     public static PublicationService publicationService = new PublicationServiceImpl();
+
     public static void main(String[] args){
         try {
             List<PaperAbstracts> abstracts = getAbtracts();
@@ -27,6 +29,10 @@ public class PaperAbstractParser {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
