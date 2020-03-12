@@ -27,7 +27,16 @@
         <result property="name" column="name"/>
     </resultMap>
 
-  <insert id="addPublication" parameterType="cmu.soc.parser.PaperDtd" useGeneratedKeys="true" keyProperty="paperDtd.id" keyColumn="id">
+
+    <resultMap id="abstractMap" type="cmu.soc.dao.entity.PubAbs" >
+        <id property="id" column="id"/>
+        <result property="pubId" column="pub_id"/>
+        <result property="title" column="title"/>
+        <result property="ee" column="ee"/>
+        <result property="abstracts" column="abstracts"/>
+    </resultMap>
+
+    <insert id="addPublication" parameterType="cmu.soc.parser.PaperDtd" useGeneratedKeys="true" keyProperty="paperDtd.id" keyColumn="id">
       INSERT INTO publication (title, channel, `year`, pages, cross_ref, ee, url, book_title, isbn, publisher, editor, volume, `number`, journal, series, `key`, mdate) VALUES
       (#{paperDtd.title}, #{paperDtd.paperDtdAttribute.paperType}, #{paperDtd.year}, #{paperDtd.pages}, #{paperDtd.crossref}, #{paperDtd.ee}, #{paperDtd.url}, #{paperDtd.booktitle}, #{paperDtd.isbn},
       #{paperDtd.publisher}, #{paperDtd.editor}, #{paperDtd.volume}, #{paperDtd.number},#{paperDtd.journal}, #{paperDtd.series}, #{paperDtd.paperDtdAttribute.key}, #{paperDtd.paperDtdAttribute.mdate})
@@ -39,10 +48,14 @@
   <insert id="addPubAuthor" parameterType="cmu.soc.dao.entity.PubAuthor" useGeneratedKeys="true" keyProperty="pubAuthor.id" keyColumn="id">
       insert into pub_author(pub_id, author_id) values(#{pubAuthor.pubId}, #{pubAuthor.authorId})
   </insert>
+    <insert id="addAbstract" parameterType="cmu.soc.dao.entity.PubAbs">
+        replace into pub_abstract( title, abs)
+        values (#{pubAbs.title}, #{pubAbs.abstracts})
+    </insert>
 
-    <select id="getOneById" resultType="cmu.soc.parser.PaperDtd">
+<!--    <select id="getOneById" resultType="cmu.soc.parser.PaperDtd">
         select * from publication where 1=1 and id=#{id};
-    </select>
+    </select>-->
 
     <select id="getOneAuthorByName" resultMap="authorMap" resultType="cmu.soc.dao.entity.Author">
         select * from author where 1=1 and `name`=#{name};
@@ -83,6 +96,9 @@
         <foreach collection="paperIds" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
+    </select>
+    <select id="getAbstract" resultMap="abstractMap">
+        select * from pub_abstract where title=#{title}
     </select>
 
 </mapper>

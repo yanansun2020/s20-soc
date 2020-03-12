@@ -1,8 +1,10 @@
 package cmu.soc.dao;
 
 import cmu.soc.dao.entity.Author;
+import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.PubAuthor;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.parser.PaperAbstracts;
 import cmu.soc.parser.PaperDtd;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,8 @@ public interface PublicationMapper {
     List<Author> getCoAuthors(@Param("name")String name);
 
     List<Publication> getAuthorsByPbIds(@Param("paperIds")List<Long> paperIds);
+
+    Long addAbstract(@Param("pubAbs") PubAbs pubAbs);
+
+   PubAbs getAbstract(@Param("title") String title);
 }

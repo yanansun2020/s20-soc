@@ -1,6 +1,9 @@
 package cmu.soc.service;
 
+import cmu.soc.dao.entity.Author;
+import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.parser.PaperAbstracts;
 
 import java.util.List;
 
@@ -43,5 +46,12 @@ public interface PublicationService {
      */
     List<Publication> getPublications(String conferenceName, String year);
 
+    void addAbstract(List<PaperAbstracts> paperAbstracts);
+
+    void addAbstractToDB(PubAbs paperAbstracts);
+
+    void addAuthor(Author author);
+
+    PubAbs getAbsByTitile(String title);
 
 }

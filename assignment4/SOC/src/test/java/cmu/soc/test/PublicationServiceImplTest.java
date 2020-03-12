@@ -1,6 +1,9 @@
 package cmu.soc.test;
 
+import cmu.soc.dao.entity.Author;
+import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.parser.PaperAbstracts;
 import cmu.soc.service.PublicationService;
 import cmu.soc.service.PublicationServiceImpl;
 import cmu.soc.xquery.XQuery;
@@ -98,5 +101,21 @@ public class PublicationServiceImplTest {
     public void testXquery4(){
         String  file= "q4.xqy";
         //System.out.println(XQuery.getByString("Performance Impact of Web Service Migration in Embedded Environments."));
+    }
+
+    @Test
+    public void testAbstract(){
+        PubAbs paperAbstracts = new PubAbs();
+        paperAbstracts.setPubId(1l);
+        paperAbstracts.setTitle("test");
+        paperAbstracts.setEe("test");
+        paperAbstracts.setAbstracts("ee");
+        publicationService.addAbstractToDB( paperAbstracts);
+
+        PubAbs pubAbs = publicationService.getAbsByTitile("test");
+        System.out.println("1");
+      /*  Author author = new Author();
+        author.setName("author");
+        publicationService.addAuthor(author);*/
     }
 }

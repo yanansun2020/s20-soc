@@ -2,16 +2,18 @@ package cmu.soc.service;
 
 import cmu.soc.dao.PublicationMapper;
 import cmu.soc.dao.entity.Author;
+import cmu.soc.dao.entity.PubAbs;
 import cmu.soc.dao.entity.PubAuthor;
 import cmu.soc.dao.entity.Publication;
+import cmu.soc.parser.PaperAbstracts;
 import cmu.soc.parser.PaperDtd;
 import cmu.soc.parser.PaperDtdAttribute;
-import cmu.soc.parser.PaperType;
 import cmu.soc.parser.XmlParser;
 import cmu.soc.util.ReflectionUtil;
 import cmu.soc.util.SqlSessionUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
+import org.junit.platform.commons.util.CollectionUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -104,6 +106,35 @@ public class PublicationServiceImpl implements PublicationService{
         }
         buildAuthorsAndType(publications);
         return publications;
+    }
+
+    public void addAbstract(List<PaperAbstracts> paperAbstracts) {
+        for(PaperAbstracts paperAbstracts1: paperAbstracts){
+            String title = paperAbstracts1.getTitle();
+            List<Publication> publications = getPublications(title);
+            if(publications == null || publications.size() == 0){
+                continue;
+            }
+            Publication publication = publications.get(0);
+            PubAbs pubAbs = new PubAbs();
+            pubAbs.setPubId(publication.getId());
+            pubAbs.setAbstracts(paperAbstracts1.getAbstracts());
+            addAbstractToDB(pubAbs);
+        }
+    }
+
+    public void addAbstractToDB(PubAbs pubAbs) {
+        Long resut = publicationMapper.addAbstract(pubAbs);
+        System.out.println(resut);
+    }
+
+    @Override
+    public void addAuthor(Author author) {
+        publicationMapper.addAuthor(author);
+    }
+
+    public PubAbs getAbsByTitile(String title){
+        return publicationMapper.getAbstract(title);
     }
 
     /**
