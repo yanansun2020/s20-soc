@@ -34,7 +34,7 @@ public class HandleMetadata {
                         String attribute = childNode.getNodeName();
                         String content = childNode.getLastChild().getTextContent().trim();
                         if (attribute.equals("title")) {
-                            title = content.replace(":", "-+-").replace("/", "\\");
+                            title = content;
                         } else if (attribute.equals("abstract")) {
                             paper_abstract = content;
                         }
@@ -42,6 +42,10 @@ public class HandleMetadata {
                 }
                 try {
                     Publication publication = publicationService.getPubByTitle(title);
+                    if(publication == null){
+                        System.out.println("title is " + title);
+                        continue;
+                    }
                     BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\Documents\\a-cmu\\18655SOC\\code\\mallet\\" + publication.getId() +".txt"));
                     writer.write(paper_abstract);
                     writer.close();
