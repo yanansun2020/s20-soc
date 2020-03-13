@@ -1,0 +1,51 @@
+@import model.Publication
+@(message: List[Publication])
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title></title>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+            <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    </head>
+    <body>
+        <header class="topbar">
+            <h1 class="focused" style="font-size: 37px;
+                color: #57a957">
+                <strong>The result is:</strong>
+            </h1>
+        </header>
+        <div class="row">
+            <div class="card col large4 offset-s4 ">
+            <ul>
+            @for(p <- message) {
+                <li> title: @p.title</li>
+                <li>channel: @p.channel</li>
+                <li>year: @p.year</li>
+                <li>pages: @p.pages</li>
+                <li>crossRef: @p.crossRef</li>
+                <li>ee: @p.ee</li>
+                <li>url: @p.url</li>
+                <li>bookTitle: @p.bookTitle</li>
+                <li>isbn: @p.isbn</li>
+                <li>volume: @p.volume</li>
+                <li>number: @p.number</li>
+                <li>journal: @p.journal</li>
+                <li>series: @p.series</li>
+                <li>mdate: @p.mdate</li>
+                <li>keyWord: @p.keyWord</li>
+                <li>================================</li>
+            }
+            </ul>
+            </div>
+        </div>
+    </body>
+</html>
