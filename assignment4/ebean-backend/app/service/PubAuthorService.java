@@ -260,6 +260,7 @@ public class PubAuthorService {
             return null;
         }
         PublicationWrapper publicationWrapper = new PublicationWrapper();
+        publicationWrapper.setId(publication.getId());
         publicationWrapper.setTitle(publication.getTitle());
         publicationWrapper.setChannel(publication.getChannel());
         publicationWrapper.setMdate(publication.getMdate());
