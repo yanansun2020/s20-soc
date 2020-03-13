@@ -27,7 +27,7 @@ public class PaperAbstractParser {
         try {
             List<PaperAbstracts> abstracts = getAbtracts();
             publicationService.addAbstract(abstracts);
-            System.out.println("haha");
+            System.out.println("done");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (IOException|SAXException|SQLException|ClassNotFoundException e) {
