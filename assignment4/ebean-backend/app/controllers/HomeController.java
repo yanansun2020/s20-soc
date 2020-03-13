@@ -2,6 +2,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.PubCategory;
 import models.Publication;
+import models.PublicationWrapper;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import play.libs.Json;
@@ -152,6 +153,22 @@ public class HomeController extends Controller {
             return ok(Json.toJson(new ArrayList<>()));
         }
         return ok(Json.toJson(categories));
+    }
+
+    public Result getPubByCategory(String category) {
+        List<Publication> pubWrapper = pubAuthorService.getByCategory(category);
+        if(CollectionUtils.isEmpty(pubWrapper)){
+            return ok(Json.toJson(new ArrayList<>()));
+        }
+        return ok(Json.toJson(pubWrapper));
+    }
+
+    public Result getPubDetail(String pubId) {
+        PublicationWrapper pubWrapper = pubAuthorService.getByPubId(pubId);
+        if(pubWrapper == null){
+            return ok(Json.toJson(new PublicationWrapper()));
+        }
+        return ok(Json.toJson(pubWrapper));
     }
 
 }

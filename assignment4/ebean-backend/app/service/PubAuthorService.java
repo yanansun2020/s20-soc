@@ -6,15 +6,18 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import models.Author;
+import models.PubAbstract;
 import models.PubAuthor;
 import models.PubCategory;
 import models.Publication;
+import models.PublicationWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.util.CollectionUtils;
 import play.libs.Json;
 import service.xquery.XQuery;
 
@@ -237,8 +240,40 @@ public class PubAuthorService {
     }
 
     public static List<Publication> getByCategory(String categoryId){
-        List<Long> pubIds = PubCategory.getPubIds(Integer.parseInt(categoryId));
-        return PubCategory.aggregateByIndex();
+        List<PubCategory> pubCategoriess = PubCategory.getPubIds(Integer.parseInt(categoryId));
+        List<Long> pubIds = pubCategoriess.stream().map(PubCategory::getPubId).collect(Collectors.toList());
+        if(CollectionUtils.isEmpty(pubIds)){
+            return Collections.emptyList();
+        }
+        return Publication.getByIds(pubIds);
+    }
+
+    public static PublicationWrapper getByPubId(String pubId){
+        List<Long> pubIds = new ArrayList<>();
+        pubIds.add(Long.parseLong(pubId));
+        List<Publication> publications = Publication.getByIds(pubIds);
+        Publication publication = null;
+        if(!CollectionUtils.isEmpty(publications)){
+            publication = publications.get(0);
+        }
+        if(publication == null){
+            return null;
+        }
+        PublicationWrapper publicationWrapper = new PublicationWrapper();
+        publicationWrapper.setTitle(publication.getTitle());
+        publicationWrapper.setChannel(publication.getChannel());
+        publicationWrapper.setMdate(publication.getMdate());
+        List<PubAuthor> pubAuthors = PubAuthor.getByPub(pubIds);
+        Map<Long, List<Long>> pubAuthorIds = pubAuthors.stream()
+                .collect(Collectors.groupingBy(PubAuthor::getPubId,Collectors.mapping(PubAuthor::getAuthorId, Collectors.toList())));
+        List<Long> authorIds = pubAuthorIds.get(publication.getId());
+        List<Author> authors = Author.findByIds(authorIds);
+        publicationWrapper.setAuthors(authors);
+        List<PubAbstract> pubAbstracts = PubAbstract.getAbstractsByIds(pubIds);
+        Map<Long, String> pubAbstractMap = pubAbstracts.stream().collect(
+                Collectors.toMap(PubAbstract::getPubId, PubAbstract::getAbs, (oldVal, newVal) -> oldVal));
+        publicationWrapper.setAbs(pubAbstractMap.get(publication.getId()));
+        return publicationWrapper;
     }
 
 

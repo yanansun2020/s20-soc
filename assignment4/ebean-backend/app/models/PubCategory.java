@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name="pub_abstract")
+@Table(name="pub_category")
 public class PubCategory extends Model {
     @Column(name="id")
     private Long id;
@@ -56,12 +56,8 @@ public class PubCategory extends Model {
         return list;
     }
 
-    public static List<Long> getPubIds(Integer maxIndex){
-        Query<Long> query = Ebean.find(Long.class);
-        String sql = "SELECT pub_id from pub_category where max_index =" + maxIndex;
-        RawSql rawSql = RawSqlBuilder.parse(sql).create();
-        query.setRawSql(rawSql);
-        return query.findList();
+    public static List<PubCategory> getPubIds(Integer maxIndex){
+        return findCategory.select("pubId").where().eq("maxIndex", maxIndex).findList();
     }
 
     public Long getId() {

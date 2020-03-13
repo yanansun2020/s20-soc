@@ -49,7 +49,7 @@ public class Publication extends Model {
     private String journal;
     @Column(name="series")
     private String series;
-    @Column(name="key_word")
+    @Column(name="key")
     private String keyWord;
     @Column(name="mdate")
     private String mdate;
@@ -69,6 +69,14 @@ public class Publication extends Model {
                 .eq("journal",journal)
                 .eq("volume", volume)
                 .eq("number", number)
+                .findList();
+    }
+
+
+    public static List<Publication> getByIds(List<Long> ids){
+        return Publication.findPublications
+                .where()
+                .in("id", ids)
                 .findList();
     }
 

@@ -3,28 +3,30 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                       controllers.HomeController.index
+GET        /                        controllers.HomeController.index
 
 #1.1 Given author name A, list all of her co-authors.
-GET         /coauthor               controllers.HomeController.coAuthors(author : String)
+GET        /coauthor                controllers.HomeController.coAuthors(author : String)
 
 #1.2 Given a paper name (i.e., title), list its publication metadata.
-GET         /pubbytitle             controllers.HomeController.publicationsByTitle(title : String)
+GET        /pubbytitle              controllers.HomeController.publicationsByTitle(title : String)
 #1.3 Given a journal name and a year (volume) and an issue (number),
-GET         /pubbyyear              controllers.HomeController.getByVolumeAndNumber(journal:String, volume:String, number:String)
+GET        /pubbyyear               controllers.HomeController.getByVolumeAndNumber(journal:String, volume:String, number:String)
 #1.4 Display all the article titles published in the area of SOC;
-GET         /alltitle               controllers.HomeController.getAllSOCArticleTitles
+GET        /alltitle                controllers.HomeController.getAllSOCArticleTitles
 #1.5 Display the titles of the articles published by a researcher in a specific year;
-GET         /pubbyresearcher        controllers.HomeController.getByResearcherAndYear(researcher:String, year:String)
+GET        /pubbyresearcher         controllers.HomeController.getByResearcherAndYear(researcher:String, year:String)
 #1.6 Display all the authors who have published more than 10 papers in the area of SOC to date
-GET         /authorsgreat           controllers.HomeController.getAuthors
+GET        /authorsgreat            controllers.HomeController.getAuthors
 #2.1 Given a researcher's name and a year, list all published papers' metadata;
-GET         /pubbyry                controllers.HomeController.getPubByResearcherAndYear(researcher:String, year : String)
+GET        /pubbyry                 controllers.HomeController.getPubByResearcherAndYear(researcher:String, year : String)
 #2.2 For the productive authors (e.g., published more than 10 papers) in the area of SOC,
 #list all of their co-authors;
-GET         /greatcoauthor          controllers.HomeController.getCoAuthorsOfProductiveAuthors
+GET        /greatcoauthor           controllers.HomeController.getCoAuthorsOfProductiveAuthors
 #2.3 Given a conference name, and a range of years (between 2003-2019), mark the locations of where the conference was held in a map.
-GET         /getAltLot              controllers.HomeController.getAltLot(conferenceName:String, startYear:String, endYear:String)
+GET        /getAltLot               controllers.HomeController.getAltLot(conferenceName:String, startYear:String, endYear:String)
 
-
-GET         /getCategory              controllers.HomeController.getCategory
+#assignment 4
+GET        /getCategory             controllers.HomeController.getCategory
+GET        /getPubByCategory        controllers.HomeController.getPubByCategory(category: String)
+GET        /getPubDetail            controllers.HomeController.getPubDetail(pubId: String)

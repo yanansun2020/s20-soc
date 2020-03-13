@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name="pub_abstract")
@@ -20,6 +21,14 @@ public class PubAbstract extends Model {
     private String ee;
     @Column(name="pub_id")
     private Long pubId;
+    public static Find<String, PubAbstract> findPublications = new Find<String, PubAbstract>(){};
+
+    public static List<PubAbstract> getAbstractsByIds(List<Long> pubIds){
+        return findPublications
+                .where()
+                .in("pubId", pubIds)
+                .findList();
+    }
 
     public Long getId() {
         return id;

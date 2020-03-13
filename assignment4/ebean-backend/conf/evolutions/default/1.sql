@@ -10,6 +10,22 @@ create table author (
 );
 
 create table pub_abstract (
+  id                            bigint auto_increment not null,
+  abs                           varchar(255),
+  title                         varchar(255),
+  ee                            varchar(255),
+  pub_id                        bigint,
+  constraint pk_pub_abstract primary key (id)
+);
+
+create table pub_author (
+  id                            bigint auto_increment not null,
+  pub_id                        bigint,
+  author_id                     bigint,
+  constraint pk_pub_author primary key (id)
+);
+
+create table pub_category (
   id                            bigint,
   pub_id                        bigint,
   category1                     varchar(255),
@@ -25,13 +41,6 @@ create table pub_abstract (
   max_rate                      varchar(255),
   max_index                     integer,
   count                         integer
-);
-
-create table pub_author (
-  id                            bigint auto_increment not null,
-  pub_id                        bigint,
-  author_id                     bigint,
-  constraint pk_pub_author primary key (id)
 );
 
 create table publication (
@@ -51,7 +60,7 @@ create table publication (
   number                        varchar(255),
   journal                       varchar(255),
   series                        varchar(255),
-  key_word                      varchar(255),
+  key                           varchar(255),
   mdate                         varchar(255),
   constraint pk_publication primary key (id)
 );
@@ -71,6 +80,8 @@ drop table if exists author;
 drop table if exists pub_abstract;
 
 drop table if exists pub_author;
+
+drop table if exists pub_category;
 
 drop table if exists publication;
 
