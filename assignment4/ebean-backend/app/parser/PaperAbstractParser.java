@@ -30,13 +30,7 @@ public class PaperAbstractParser {
             System.out.println("haha");
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException|SAXException|SQLException|ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
