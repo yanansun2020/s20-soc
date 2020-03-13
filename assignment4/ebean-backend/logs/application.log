@@ -1,4 +1,4 @@
-2020-03-12 21:07:38,530 [INFO] from application in ForkJoinPool-1-worker-1 - Creating Pool for datasource 'default'
-2020-03-12 21:07:38,886 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-1-worker-1 - Database [default] connected at jdbc:mysql://localhost:3306/test1?autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-2020-03-12 21:07:42,878 [WARN] from com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager in ForkJoinPool-1-worker-1 - Bean [models.PubCategory] has no unique id set
-2020-03-12 21:07:44,303 [INFO] from play.api.Play in ForkJoinPool-1-worker-1 - Application started (Dev)
+2020-03-13 00:14:21,682 [INFO] from application in ForkJoinPool-1-worker-1 - Creating Pool for datasource 'default'
+2020-03-13 00:14:25,413 [INFO] from play.api.db.DefaultDBApi in ForkJoinPool-1-worker-1 - Database [default] connected at jdbc:mysql://localhost:3306/test1?autoReconnect=true&useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+2020-03-13 00:14:26,687 [WARN] from com.avaje.ebeaninternal.server.deploy.BeanDescriptorManager in ForkJoinPool-1-worker-1 - Bean [models.PubCategory] has no unique id set
+2020-03-13 00:14:32,959 [INFO] from play.api.Play in ForkJoinPool-1-worker-1 - Application started (Dev)
