@@ -1,10 +1,11 @@
-package edu.cmu.soc;
+package controllers;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,12 +19,13 @@ public class ReadServiceFeatures {
     private static final String TIME_MIN = "time_min";
     private static final String COST_RANGE = "cost_range";
     private static final String COST_MIN = "cost_min";
+    private static final String file = "/tmp/soc/sc.xlsx";
     public static void main(String[] args) {
-        Map<Integer, List<ServiceFeature>> features = getPercentageMap("sc.xlsx");
+        Map<Integer, List<ServiceFeature>> features = getPercentageMap(file);
         System.out.println(1);
     }
     static Map<Integer, List<ServiceFeature>> getFeaturesMap(){
-        Map<Integer, List<ServiceFeature>> features = getPercentageMap("sc.xlsx");
+        Map<Integer, List<ServiceFeature>> features = getPercentageMap(file);
         return features;
     }
 
@@ -109,7 +111,7 @@ public class ReadServiceFeatures {
         Map<Integer, List<ServiceFeature>> featureMap = new HashMap<Integer, List<ServiceFeature>>();
         try {
             //Create Workbook instance holding reference to .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(ClassLoader.getSystemResourceAsStream(fileName));
+            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(fileName));
 
             //Get first/desired sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);

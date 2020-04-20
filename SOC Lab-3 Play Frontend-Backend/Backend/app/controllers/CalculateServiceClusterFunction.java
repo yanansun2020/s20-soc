@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Klaus Meffert
  * @since 1.0
  */
-public class MinimizingMakeChangeFitnessFunction
+public class CalculateServiceClusterFunction
     extends FitnessFunction {
 
   static Map<Integer, List<ServiceFeature>> serviceFeatures = ReadServiceFeatures.getFeaturesMap();
@@ -22,7 +22,7 @@ public class MinimizingMakeChangeFitnessFunction
   private static final Double TIME_WEIGHT = 0.2;
   private static final Double AVAILABLE_WEIGHT = 0.35;
 
-  public MinimizingMakeChangeFitnessFunction() {
+  public CalculateServiceClusterFunction() {
   }
 
   /**

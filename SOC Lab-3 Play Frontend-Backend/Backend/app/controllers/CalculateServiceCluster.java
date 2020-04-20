@@ -29,7 +29,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinimizingMakeChange {
+public class CalculateServiceCluster {
 
     private static final int MAX_ALLOWED_EVOLUTIONS = 50;
     public static EvolutionMonitor m_monitor;
@@ -54,7 +54,7 @@ public class MinimizingMakeChange {
         // the target amount of change passed in to this method.
         // ---------------------------------------------------------
         FitnessFunction myFunc =
-                new MinimizingMakeChangeFitnessFunction();
+                new CalculateServiceClusterFunction();
         conf.setFitnessFunction(myFunc);
         if (a_doMonitor) {
             // Turn on monitoring/auditing of evolution progress.
@@ -127,17 +127,17 @@ public class MinimizingMakeChange {
                 bestSolutionSoFar.getFitnessValue());
         bestSolutionSoFar.setFitnessValueDirectly(-1);
         System.out.println("It contains the following services: ");
-        int serviceIndex0 = MinimizingMakeChangeFitnessFunction.getIndexOfService(
+        int serviceIndex0 = CalculateServiceClusterFunction.getIndexOfService(
                 bestSolutionSoFar, 0);
-        String serviceName0 = MinimizingMakeChangeFitnessFunction.serviceFeatures.get(0).
+        String serviceName0 = CalculateServiceClusterFunction.serviceFeatures.get(0).
                 get(serviceIndex0).getServiceName();
-        int serviceIndex1 = MinimizingMakeChangeFitnessFunction.getIndexOfService(
+        int serviceIndex1 = CalculateServiceClusterFunction.getIndexOfService(
                 bestSolutionSoFar, 1);
-        String serviceName1 = MinimizingMakeChangeFitnessFunction.serviceFeatures.get(1)
+        String serviceName1 = CalculateServiceClusterFunction.serviceFeatures.get(1)
                 .get(serviceIndex1).getServiceName();
-        int serviceIndex2 = MinimizingMakeChangeFitnessFunction.getIndexOfService(
+        int serviceIndex2 = CalculateServiceClusterFunction.getIndexOfService(
                 bestSolutionSoFar, 2);
-        String serviceName2 = MinimizingMakeChangeFitnessFunction.serviceFeatures.get(2)
+        String serviceName2 = CalculateServiceClusterFunction.serviceFeatures.get(2)
                 .get(serviceIndex2).getServiceName();
         List<BestService> bestServiceList = new ArrayList<>(3);
         BestService bestService1 = new BestService(serviceIndex0, serviceName0);
