@@ -1,8 +1,5 @@
 package controllers;
 
-import lombok.Data;
-
-@Data
 public class BestService {
     public BestService() {
     }

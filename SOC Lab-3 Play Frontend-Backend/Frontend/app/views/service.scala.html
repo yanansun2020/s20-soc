@@ -1,0 +1,21 @@
+@(message: BestServiceFeature)
+<!DOCTYPE html>
+<html>
+    <body>
+
+        <header class="topbar">
+            <h1 class="focused" style="font-size: 37px;
+                color: #57a957">
+                <strong>The result of this query:</strong>
+            </h1>
+            <h3>Fitness value is : @message.getFitness</h3>
+            <br>The combination of service is:<br>
+            <ul>
+            @for(p <- message.getBestServiceList) {
+                <li>@p.getServiceName</li>
+            }
+            </ul>
+        </header>
+
+    </body>
+</html>

@@ -1,10 +1,7 @@
 package controllers;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
 public class BestServiceFeature {
     private List<BestService> bestServiceList;
     private Double fitness;
